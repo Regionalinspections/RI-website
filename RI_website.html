@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regional Inspections | Forensic & Structural Engineering Melbourne</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #1a3a2a; --green-light: #2e6347;
+  --gold: #c9a84c; --gold-light: #e2c27a;
+  --cream: #f5f0e8; --cream-light: #faf8f4;
+  --text: #1a1a1a; --text-mid: #444; --text-light: #888;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--cream-light); color: var(--text); overflow-x: hidden; }
+
+/* ── CALL BAR ── */
+.call-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: var(--green); height: 44px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 1.25rem; border-bottom: 1px solid rgba(201,168,76,0.25);
+}
+.call-bar-email { display: none; }
+.call-bar-actions { display: flex; gap: 0.75rem; align-items: center; width: 100%; justify-content: space-between; }
+.call-bar a { text-decoration: none; font-size: 0.73rem; font-weight: 500; color: var(--gold-light); white-space: nowrap; }
+.cta-pill {
+  background: var(--gold) !important; color: var(--green) !important;
+  padding: 0.22rem 0.9rem; font-weight: 700 !important;
+  font-size: 0.68rem !important; letter-spacing: 0.07em; text-transform: uppercase;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 44px; left: 0; right: 0; z-index: 999;
+  background: rgba(250,248,244,0.97); backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(26,58,42,0.1);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 1.25rem; height: 54px; transition: box-shadow 0.3s;
+}
+nav.scrolled { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+.nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 600; color: var(--green); text-decoration: none; }
+.nav-logo span { color: var(--gold); }
+.nav-links { display: none; list-style: none; gap: 2rem; }
+.nav-links a { text-decoration: none; font-size: 0.76rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; color: var(--text-mid); transition: color 0.2s; }
+.nav-links a:hover { color: var(--green); }
+.nav-book { background: var(--green); color: var(--cream) !important; padding: 0.4rem 1rem; font-size: 0.72rem !important; text-transform: uppercase; font-weight: 600 !important; }
+
+/* ── BUTTONS ── */
+.btn-gold {
+  background: var(--gold); color: var(--green); padding: 0.85rem 1.75rem;
+  font-size: 0.76rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase;
+  text-decoration: none; border: none; cursor: pointer; display: inline-block; transition: background 0.2s;
+}
+.btn-gold:hover { background: var(--gold-light); }
+.btn-ghost {
+  border: 1px solid rgba(245,240,232,0.35); color: rgba(245,240,232,0.85);
+  padding: 0.85rem 1.75rem; font-size: 0.76rem; font-weight: 500; letter-spacing: 0.09em;
+  text-transform: uppercase; text-decoration: none; display: inline-block; transition: all 0.2s;
+}
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ── HERO ── */
+.hero {
+  background: var(--green); padding: 115px 1.25rem 3.5rem;
+  min-height: 100svh; display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.hero-grid {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(201,168,76,0.05) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(201,168,76,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-glow {
+  position: absolute; top: 5%; right: -15%; width: 65%; height: 65%; pointer-events: none;
+  background: radial-gradient(ellipse, rgba(46,99,71,0.55) 0%, transparent 70%);
+}
+.hero-inner { position: relative; z-index: 2; }
+.hero-eyebrow {
+  font-size: 0.64rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.6rem;
+}
+.hero-eyebrow::before { content: ''; width: 22px; height: 1px; background: var(--gold); flex-shrink: 0; }
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.9rem, 11vw, 5.5rem);
+  font-weight: 300; color: var(--cream); line-height: 1.05; margin-bottom: 0.85rem;
+}
+.hero-title em { font-style: italic; color: var(--gold-light); }
+.hero-tagline {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.05rem;
+  font-style: italic; font-weight: 300; color: rgba(245,240,232,0.55); margin-bottom: 1.25rem;
+}
+.hero-desc {
+  font-size: 0.86rem; line-height: 1.8; color: rgba(245,240,232,0.5);
+  font-weight: 300; margin-bottom: 2rem; max-width: 520px;
+}
+.hero-ctas { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+/* ── SECTION SHARED ── */
+.section-eyebrow {
+  font-size: 0.63rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 0.65rem; display: flex; align-items: center; gap: 0.55rem;
+}
+.section-eyebrow::before { content: ''; width: 18px; height: 1px; background: var(--gold); flex-shrink: 0; }
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.9rem, 6.5vw, 2.9rem);
+  font-weight: 300; color: var(--green); line-height: 1.2; margin-bottom: 0.9rem;
+}
+.section-title em { font-style: italic; color: var(--green-light); }
+.section-intro { font-size: 0.86rem; line-height: 1.8; color: var(--text-mid); font-weight: 300; }
+
+/* ── SERVICES ── */
+.services { padding: 4rem 1.25rem; background: var(--cream-light); }
+.services-header { margin-bottom: 2.25rem; }
+
+.services-grid { display: flex; flex-direction: column; gap: 1px; background: rgba(26,58,42,0.08); }
+
+.svc-card {
+  background: var(--cream-light); padding: 1.5rem 1.25rem;
+  display: flex; align-items: flex-start; gap: 1rem;
+  position: relative; overflow: hidden; cursor: pointer;
+  transition: background 0.3s;
+}
+.svc-card::after {
+  content: ''; position: absolute; left: 0; bottom: 0;
+  width: 0; height: 2px; background: var(--gold); transition: width 0.35s;
+}
+.svc-card:hover { background: var(--green); }
+.svc-card:hover::after { width: 100%; }
+.svc-card:hover .svc-num   { color: rgba(245,240,232,0.25); }
+.svc-card:hover .svc-icon  { border-color: rgba(201,168,76,0.3); }
+.svc-card:hover .svc-name  { color: var(--cream); }
+.svc-card:hover .svc-desc  { color: rgba(245,240,232,0.5); }
+.svc-card:hover .svc-link  { color: var(--gold); }
+
+.svc-meta { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; flex-shrink: 0; }
+.svc-num { font-family: 'Cormorant Garamond', serif; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--text-light); transition: color 0.3s; }
+.svc-icon {
+  width: 38px; height: 38px; border: 1px solid rgba(26,58,42,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0; transition: border-color 0.3s;
+}
+.svc-body { flex: 1; }
+.svc-name { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 600; color: var(--green); line-height: 1.3; margin-bottom: 0.45rem; transition: color 0.3s; }
+.svc-desc { font-size: 0.8rem; line-height: 1.7; color: var(--text-mid); font-weight: 300; margin-bottom: 0.65rem; transition: color 0.3s; }
+.svc-link { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green-light); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+
+/* ── WHY US ── */
+.why { padding: 4rem 1.25rem; background: var(--green); }
+.why .section-title { color: var(--cream); }
+.why .section-eyebrow { color: var(--gold); }
+.why .section-eyebrow::before { background: var(--gold); }
+.why .section-intro { color: rgba(245,240,232,0.5); margin-bottom: 2rem; }
+
+.why-metrics {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: rgba(201,168,76,0.1); margin-bottom: 2rem;
+}
+.why-metric { background: rgba(255,255,255,0.03); padding: 1.4rem 1rem; text-align: center; }
+.why-metric-num { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--gold-light); margin-bottom: 0.25rem; }
+.why-metric-label { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,240,232,0.3); }
+
+.why-features { display: flex; flex-direction: column; gap: 1.4rem; }
+.why-feature { display: flex; gap: 0.9rem; align-items: flex-start; }
+.why-feature-icon {
+  width: 38px; height: 38px; flex-shrink: 0;
+  border: 1px solid rgba(201,168,76,0.3);
+  display: flex; align-items: center; justify-content: center; font-size: 1rem;
+}
+.why-feature-title { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 600; color: var(--cream); margin-bottom: 0.2rem; }
+.why-feature-text { font-size: 0.79rem; line-height: 1.65; color: rgba(245,240,232,0.45); font-weight: 300; }
+
+/* ── PROCESS ── */
+.process { padding: 4rem 1.25rem; background: var(--cream); }
+.process-header { margin-bottom: 2rem; }
+.process-steps { display: flex; flex-direction: column; }
+.process-step { display: flex; align-items: flex-start; gap: 1.1rem; padding: 1.4rem 0; border-bottom: 1px solid rgba(26,58,42,0.07); }
+.process-step:last-child { border-bottom: none; }
+.step-num {
+  width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0;
+  background: var(--green); border: 1px solid rgba(201,168,76,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 300; color: var(--gold-light);
+}
+.step-title { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 600; color: var(--green); margin-bottom: 0.3rem; }
+.step-desc { font-size: 0.8rem; line-height: 1.7; color: var(--text-mid); font-weight: 300; }
+
+/* ── TESTIMONIALS ── */
+.testimonials { padding: 4rem 1.25rem; background: var(--cream-light); }
+.testimonials-header { margin-bottom: 2rem; }
+.testimonials-list { display: flex; flex-direction: column; gap: 1px; background: rgba(26,58,42,0.07); }
+.testimonial { background: var(--cream-light); padding: 1.6rem; }
+.t-stars { color: var(--gold); font-size: 0.7rem; letter-spacing: 0.1em; margin-bottom: 0.7rem; }
+.t-text { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; color: var(--text); line-height: 1.7; margin-bottom: 0.9rem; }
+.t-author { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-light); font-weight: 500; }
+.t-role { font-size: 0.68rem; color: var(--text-light); margin-top: 0.1rem; }
+
+/* ── COVERAGE ── */
+.coverage { padding: 4rem 1.25rem; background: var(--green); }
+.coverage .section-title { color: var(--cream); }
+.coverage .section-eyebrow { color: var(--gold); }
+.coverage .section-eyebrow::before { background: var(--gold); }
+.coverage-areas { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+.area-tag {
+  border: 1px solid rgba(201,168,76,0.2); color: rgba(245,240,232,0.6);
+  padding: 0.4rem 1rem; font-size: 0.7rem; letter-spacing: 0.07em; text-transform: uppercase; transition: all 0.2s;
+}
+.area-tag:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ── CONTACT ── */
+.contact { padding: 4rem 1.25rem; background: var(--cream); }
+.contact-info { margin-bottom: 2.5rem; }
+.contact-methods { display: flex; flex-direction: column; gap: 1rem; margin: 1.5rem 0; }
+.contact-method { display: flex; gap: 0.9rem; align-items: center; text-decoration: none; color: inherit; }
+.cm-icon { width: 38px; height: 38px; background: var(--green); display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 0.85rem; flex-shrink: 0; }
+.cm-label { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); font-weight: 500; }
+.cm-value { font-size: 0.84rem; color: var(--text); }
+.response-note { font-size: 0.72rem; color: var(--text-light); font-style: italic; }
+
+.contact-form { display: flex; flex-direction: column; gap: 0.9rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.3rem; }
+.form-label { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-mid); font-weight: 500; }
+.form-field {
+  background: var(--cream-light); border: 1px solid rgba(26,58,42,0.15);
+  padding: 0.72rem 0.9rem; font-size: 0.84rem; font-family: 'DM Sans', sans-serif;
+  color: var(--text); outline: none; width: 100%;
+  -webkit-appearance: none; border-radius: 0; transition: border-color 0.2s;
+}
+.form-field:focus { border-color: var(--green); }
+textarea.form-field { resize: vertical; min-height: 100px; }
+
+/* ── FOOTER ── */
+footer { background: var(--green); padding: 2.5rem 1.25rem 1.5rem; border-top: 1px solid rgba(201,168,76,0.12); }
+.footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: var(--cream); margin-bottom: 0.2rem; }
+.footer-brand span { color: var(--gold); }
+.footer-tagline { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.83rem; color: rgba(245,240,232,0.3); margin-bottom: 0.7rem; }
+.footer-desc { font-size: 0.76rem; line-height: 1.7; color: rgba(245,240,232,0.28); font-weight: 300; margin-bottom: 2rem; }
+.footer-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding-bottom: 1.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.footer-col-title { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.9rem; font-weight: 500; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.footer-links a { text-decoration: none; font-size: 0.76rem; color: rgba(245,240,232,0.32); transition: color 0.2s; }
+.footer-links a:hover { color: var(--gold-light); }
+.footer-bottom { font-size: 0.68rem; color: rgba(245,240,232,0.2); display: flex; flex-direction: column; gap: 0.2rem; }
+
+/* ── ANIMATIONS ── */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.in { opacity: 1; transform: none; }
+.d1 { transition-delay: 0.1s; } .d2 { transition-delay: 0.2s; } .d3 { transition-delay: 0.3s; }
+
+/* ── DESKTOP ── */
+@media (min-width: 768px) {
+  .call-bar { padding: 0 2.5rem; height: 48px; }
+  .call-bar-email { display: block; }
+  .call-bar-actions { width: auto; }
+  nav { padding: 0 2.5rem; height: 64px; top: 48px; }
+  .nav-links { display: flex; }
+  .hero { padding: 140px 5% 5rem; }
+  .services { padding: 6rem 5%; }
+  .services-grid { display: grid; grid-template-columns: repeat(3,1fr); }
+  .svc-card { flex-direction: column; }
+  .svc-meta { flex-direction: row; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 1rem; }
+  .why { padding: 6rem 5%; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .process { padding: 6rem 5%; }
+  .process-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 2rem; }
+  .process-step { flex-direction: column; align-items: center; text-align: center; border-bottom: none; padding: 0; }
+  .step-num { margin-bottom: 1rem; }
+  .testimonials { padding: 6rem 5%; }
+  .testimonials-list { display: grid; grid-template-columns: repeat(3,1fr); }
+  .coverage { padding: 5rem 5%; }
+  .contact { padding: 6rem 5%; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+  .contact-info { margin-bottom: 0; }
+  footer { padding: 4rem 5% 2rem; }
+  .footer-wrap { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .footer-cols { display: contents; border-bottom: none; padding: 0; margin: 0; }
+  .footer-desc { margin-bottom: 0; }
+  .footer-bottom { flex-direction: row; justify-content: space-between; }
+}
+</style>
+</head>
+<body>
+
+<!-- CALL BAR -->
+<div class="call-bar">
+  <span class="call-bar-email" style="font-size:0.72rem;color:rgba(255,255,255,0.5);letter-spacing:0.06em;">Forensic & Structural Engineering · Melbourne VIC</span>
+  <div class="call-bar-actions">
+    <a href="/cdn-cgi/l/email-protection#f0999e969fb0829597999f9e919c999e8380959384999f9e83de939f9dde9185"><span class="__cf_email__" data-cfemail="3950575f56794b5c5e505657585550574a495c5a4d5056574a175a565417584c">[email&#160;protected]</span></a>
+    <a href="tel:+61XXXXXXXXX">+61 XXX XXX XXX</a>
+    <a href="#contact" class="cta-pill">Book Now</a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">Regional <span>Inspections</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact" class="nav-book">Book Inspection</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Forensic &amp; Structural Engineering · Melbourne VIC</div>
+    <h1 class="hero-title">The Truth<br>About Your<br><em>Building.</em></h1>
+    <p class="hero-tagline">Independent. Evidence-based. Defensible.</p>
+    <p class="hero-desc">Engineering inspections and forensic reports for residential properties across Melbourne and Victoria. When the answer matters, get it from a structural engineer — not a building inspector.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-gold">Book an Inspection</a>
+      <a href="#services" class="btn-ghost">Our Services</a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-header">
+    <div class="section-eyebrow">What We Do</div>
+    <h2 class="section-title">Engineering <em>Services</em></h2>
+    <p class="section-intro">Every engagement is conducted by a qualified structural engineer. Reports are technically rigorous and built to withstand scrutiny — in negotiations, tribunals, or court.</p>
+  </div>
+  <div class="services-grid">
+
+    <div class="svc-card">
+      <div class="svc-meta">
+        <div class="svc-num">01</div>
+        <div class="svc-icon">🏠</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-name">Pre-Purchase Structural Inspection</div>
+        <div class="svc-desc">Foundation movement, framing defects, drainage, load paths — assessed by a structural engineer before you commit to buying.</div>
+        <a href="#contact" class="svc-link">Enquire ↗</a>
+      </div>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-meta">
+        <div class="svc-num">02</div>
+        <div class="svc-icon">🔍</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-name">Defect Assessment &amp; Report</div>
+        <div class="svc-desc">Root-cause analysis of cracking, subsidence, moisture ingress, and construction non-compliance. Court-admissible format available.</div>
+        <a href="#contact" class="svc-link">Enquire ↗</a>
+      </div>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-meta">
+        <div class="svc-num">03</div>
+        <div class="svc-icon">📋</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-name">Dilapidation Survey</div>
+        <div class="svc-desc">Pre-construction condition record to establish a defensible baseline before any adjacent work commences.</div>
+        <a href="#contact" class="svc-link">Enquire ↗</a>
+      </div>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-meta">
+        <div class="svc-num">04</div>
+        <div class="svc-icon">🏗️</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-name">Structural Assessment</div>
+        <div class="svc-desc">Load-path analysis, compliance review, and capacity assessment for renovations, extensions, or alterations.</div>
+        <a href="#contact" class="svc-link">Enquire ↗</a>
+      </div>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-meta">
+        <div class="svc-num">05</div>
+        <div class="svc-icon">📄</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-name">Insurance &amp; Dispute Reports</div>
+        <div class="svc-desc">Forensic investigation reports for insurance claims, VCAT disputes, or legal proceedings. Objective, evidence-based findings.</div>
+        <a href="#contact" class="svc-link">Enquire ↗</a>
+      </div>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-meta">
+        <div class="svc-num">06</div>
+        <div class="svc-icon">🔧</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-name">Construction Stage Inspections</div>
+        <div class="svc-desc">Frame, slab, pre-plaster, practical completion — identify non-compliances before the builder covers them up.</div>
+        <a href="#contact" class="svc-link">Enquire ↗</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why" id="about">
+  <div>
+    <div class="section-eyebrow">Why Regional Inspections</div>
+    <h2 class="section-title" style="color:var(--cream);">An Engineer's Assessment.<br><em style="color:var(--gold-light);">Not a Checklist.</em></h2>
+    <p class="section-intro">Most building inspectors hold a trade licence. We hold a structural engineering degree, 8+ years of practice, and a CPEng application through Engineers Australia.</p>
+    <div class="why-metrics" style="margin-top:1.75rem;">
+      <div class="why-metric"><div class="why-metric-num">48h</div><div class="why-metric-label">Report Delivery</div></div>
+      <div class="why-metric"><div class="why-metric-num">100%</div><div class="why-metric-label">Independent</div></div>
+    </div>
+  </div>
+  <div class="why-features">
+    <div class="why-feature">
+      <div class="why-feature-icon">🛡️</div>
+      <div>
+        <div class="why-feature-title">Independent Practice</div>
+        <div class="why-feature-text">No referral arrangements with builders or contractors. Our findings are yours alone.</div>
+      </div>
+    </div>
+    <div class="why-feature">
+      <div class="why-feature-icon">🔬</div>
+      <div>
+        <div class="why-feature-title">Forensic Methodology</div>
+        <div class="why-feature-text">Root-cause analysis, not symptom listing. Every finding traced to a cause, supported by technical reasoning.</div>
+      </div>
+    </div>
+    <div class="why-feature">
+      <div class="why-feature-icon">📑</div>
+      <div>
+        <div class="why-feature-title">Defensible Reports</div>
+        <div class="why-feature-text">Written to withstand scrutiny in VCAT, insurance reviews, or legal disputes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="process-header">
+    <div class="section-eyebrow">How It Works</div>
+    <h2 class="section-title">From Enquiry to <em>Final Report</em></h2>
+  </div>
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="step-num">1</div>
+      <div><div class="step-title">Initial Enquiry</div><div class="step-desc">Call, email, or submit a form. We scope the engagement and confirm whether a site visit is needed.</div></div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">2</div>
+      <div><div class="step-title">Site Inspection</div><div class="step-desc">Engineer-conducted visit with photos, measurements, and observations — not a tick-box walkthrough.</div></div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">3</div>
+      <div><div class="step-title">Technical Analysis</div><div class="step-desc">Findings assessed against NCC and Australian Standards to establish causation and severity.</div></div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">4</div>
+      <div><div class="step-title">Report Delivery</div><div class="step-desc">Professional engineering report with findings, cause analysis, and recommendations. Delivered within 24–48 hours.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="testimonials-header">
+    <div class="section-eyebrow">Client Feedback</div>
+    <h2 class="section-title">What Clients <em>Say</em></h2>
+  </div>
+  <div class="testimonials-list">
+    <div class="testimonial">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text">"Found cracking the building inspector completely missed. The report gave us exactly what we needed to renegotiate the purchase price."</p>
+      <div class="t-author">M. Patel</div><div class="t-role">Pre-purchase Inspection · Point Cook</div>
+    </div>
+    <div class="testimonial">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text">"Used in a VCAT dispute. The level of technical detail made a significant difference to the outcome."</p>
+      <div class="t-author">S. Thompson</div><div class="t-role">Dilapidation Report · Tarneit</div>
+    </div>
+    <div class="testimonial">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text">"Fast, professional, and genuinely knew what they were looking at. Insurance report accepted without pushback."</p>
+      <div class="t-author">D. &amp; R. Nguyen</div><div class="t-role">Insurance Report · Werribee</div>
+    </div>
+  </div>
+</section>
+
+<!-- COVERAGE -->
+<section class="coverage">
+  <div class="section-eyebrow">Service Area</div>
+  <h2 class="section-title">Melbourne &amp; <em>Regional Victoria</em></h2>
+  <div class="coverage-areas">
+    <div class="area-tag">Point Cook</div><div class="area-tag">Werribee</div>
+    <div class="area-tag">Tarneit</div><div class="area-tag">Truganina</div>
+    <div class="area-tag">Wyndham Vale</div><div class="area-tag">Hoppers Crossing</div>
+    <div class="area-tag">Laverton</div><div class="area-tag">Altona</div>
+    <div class="area-tag">Geelong</div><div class="area-tag">Melbourne CBD</div>
+    <div class="area-tag">Western Suburbs</div><div class="area-tag">Ballarat</div>
+    <div class="area-tag">Regional VIC</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-info">
+    <div class="section-eyebrow">Get In Touch</div>
+    <h2 class="section-title">Ready to Get <em>Answers?</em></h2>
+    <p class="section-intro">Whether buying, building, disputing, or concerned — we'll tell you what's actually there.</p>
+    <div class="contact-methods">
+      <a href="tel:+61XXXXXXXXX" class="contact-method">
+        <div class="cm-icon">📞</div>
+        <div><div class="cm-label">Phone</div><div class="cm-value">+61 XXX XXX XXX</div></div>
+      </a>
+      <a href="/cdn-cgi/l/email-protection#4a23242c250a382f2d2325242b262324393a2f293e2325243964292527642b3f" class="contact-method">
+        <div class="cm-icon">✉</div>
+        <div><div class="cm-label">Email</div><div class="cm-value"><span class="__cf_email__" data-cfemail="cea7a0a8a18ebcaba9a7a1a0afa2a7a0bdbeabadbaa7a1a0bde0ada1a3e0afbb">[email&#160;protected]</span></div></div>
+      </a>
+      <div class="contact-method">
+        <div class="cm-icon">📍</div>
+        <div><div class="cm-label">Base</div><div class="cm-value">Point Cook, Melbourne VIC</div></div>
+      </div>
+    </div>
+    <p class="response-note">We respond to all enquiries within 4 business hours.</p>
+  </div>
+  <div class="contact-form" id="contactForm">
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">First Name</label><input type="text" class="form-field" placeholder="John"></div>
+      <div class="form-group"><label class="form-label">Last Name</label><input type="text" class="form-field" placeholder="Smith"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-field" placeholder="john@example.com"></div>
+    <div class="form-group"><label class="form-label">Phone</label><input type="tel" class="form-field" placeholder="04XX XXX XXX"></div>
+    <div class="form-group">
+      <label class="form-label">Service Required</label>
+      <select class="form-field">
+        <option value="">Select a service…</option>
+        <option>Pre-Purchase Structural Inspection</option>
+        <option>Defect Assessment &amp; Report</option>
+        <option>Dilapidation Survey</option>
+        <option>Structural Assessment</option>
+        <option>Insurance / Dispute Report</option>
+        <option>Construction Stage Inspection</option>
+        <option>Other / Not Sure</option>
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Property Address</label><input type="text" class="form-field" placeholder="123 Street, Suburb VIC"></div>
+    <div class="form-group"><label class="form-label">Brief Description</label><textarea class="form-field" placeholder="Describe your concern or what needs assessing…"></textarea></div>
+    <button type="button" class="btn-gold" onclick="submitForm()" style="border:none;">Submit Enquiry</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-wrap">
+    <div>
+      <div class="footer-brand">Regional <span>Inspections</span></div>
+      <div class="footer-tagline">The Truth About Your Building.</div>
+      <p class="footer-desc">Independent forensic and structural engineering consultancy. Melbourne and Victoria. Reports built to withstand scrutiny.</p>
+    </div>
+    <div class="footer-cols">
+      <div>
+        <div class="footer-col-title">Services</div>
+        <ul class="footer-links">
+          <li><a href="#services">Pre-Purchase Inspection</a></li>
+          <li><a href="#services">Defect Reports</a></li>
+          <li><a href="#services">Dilapidation Survey</a></li>
+          <li><a href="#services">Structural Assessment</a></li>
+          <li><a href="#services">Insurance Reports</a></li>
+          <li><a href="#services">Stage Inspections</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-links">
+          <li><a href="tel:+61XXXXXXXXX">+61 XXX XXX XXX</a></li>
+          <li><a href="/cdn-cgi/l/email-protection#caa3a4aca58ab8afada3a5a4aba6a3a4b9baafa9bea3a5a4b9e4a9a5a7e4abbf"><span class="__cf_email__" data-cfemail="533a3d353c132136343a3c3d323f3a3d20233630273a3c3d207d303c3e7d3226">[email&#160;protected]</span></a></li>
+          <li><a href="#contact">Book Inspection</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2025 Regional Inspections. All rights reserved.</div>
+    <div>ABN: XX XXX XXX XXX</div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Nav shadow on scroll
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 10); });
+
+  // Scroll — fires immediately for elements in viewport on load too
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.05 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Force-reveal anything that's already visible on load
+  window.addEventLi
